@@ -1,0 +1,52 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\title{A Demonstration of Tracked Changes in a Journal Article}
+\author{Example Author}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The original method uses a fixed calibration and gives stable results.
+\end{abstract}
+
+\section{Introduction}
+The baseline converter uses a fixed gain. The old calibration is retained.
+The method was previously reported by \cite{smith2022}.
+For a simple estimate, we use $E=mc^2$.
+
+\section{Model and results}
+The measured response follows
+\begin{equation}
+  y = 2x + 1
+  \label{eq:response}
+\end{equation}
+The coefficient in Equation~\ref{eq:response} is constant.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.58\linewidth]{figure_org.png}
+  \caption{Reference response of the baseline converter.}
+  \label{fig:response}
+\end{figure}
+
+\begin{table}[ht]
+  \centering
+  \caption{Measured performance.}
+  \begin{tabular}{lcc}
+    Method & Accuracy & Time \\
+    \hline
+    Baseline & 82\% & 12 s \\
+  \end{tabular}
+  \label{tab:performance}
+\end{table}
+
+Figure~\ref{fig:response} and Table~\ref{tab:performance} summarize the results.
+
+\begin{thebibliography}{9}
+\bibitem{smith2022} A. Smith, ``A baseline converter study,'' Journal of Examples, 2022.
+\bibitem{lee2024} B. Lee, ``Adaptive calibration of converters,'' Journal of Examples, 2024.
+\end{thebibliography}
+\end{document}

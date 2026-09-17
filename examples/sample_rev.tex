@@ -1,0 +1,52 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\title{A Demonstration of Tracked Changes in a Journal Article}
+\author{Example Author}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The revised method uses an adaptive calibration and gives more stable results.
+\end{abstract}
+
+\section{Introduction}
+The revised converter uses an adaptive gain. The calibration is retained.
+The method was recently improved by \cite{lee2024}.
+For a simple estimate, we use $E=\alpha mc^2$.
+
+\section{Model and results}
+The measured response follows
+\begin{equation}
+  y = 3x + 1
+  \label{eq:response}
+\end{equation}
+The coefficient in Equation~\ref{eq:response} is adaptive.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.58\linewidth]{figure_rev.png}
+  \caption{Revised response of the adaptive converter.}
+  \label{fig:response}
+\end{figure}
+
+\begin{table}[ht]
+  \centering
+  \caption{Measured performance.}
+  \begin{tabular}{lcc}
+    Method & Accuracy & Time \\
+    \hline
+    Adaptive & 91\% & 9 s \\
+  \end{tabular}
+  \label{tab:performance}
+\end{table}
+
+Figure~\ref{fig:response} and Table~\ref{tab:performance} summarize the improved results.
+
+\begin{thebibliography}{9}
+\bibitem{smith2022} A. Smith, ``A baseline converter study,'' Journal of Examples, 2022.
+\bibitem{lee2024} B. Lee, ``Adaptive calibration of converters,'' Journal of Examples, 2024.
+\end{thebibliography}
+\end{document}
