@@ -1,6 +1,6 @@
 # 简易 LaTeX 正文对比
 
-English documentation: [README_EN.md](README_EN.md).
+**简体中文** | [English](README_EN.md)
 
 输入旧版和新版 `.tex` 文件，生成一个带修改痕迹的 `.tex` 文件。**删除**显示红色删除线，**替换后写入的文字**显示蓝色，**纯新增**显示蓝色下划线。公式、引用、图表也按下述规则处理。
 

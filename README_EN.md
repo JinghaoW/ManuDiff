@@ -1,5 +1,7 @@
 # Simple LaTeX Diff for Manuscript Revisions
 
+[简体中文](README.md) | **English**
+
 Compare an original and a revised `.tex` file and generate a LaTeX document with visible revision marks. Deleted text appears in **red with a strikeout**, replacement text in **blue**, and newly inserted text in **blue with an underline**. The tool also handles selected math, citation, figure, and table changes.
 
 ## Use the browser interface
