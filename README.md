@@ -12,12 +12,14 @@ English documentation: [README_EN.md](README_EN.md).
 
 ### 需要安装什么
 
-- ## **只用浏览器生成 `.tex`：** 无需安装本项目的依赖，也**不需要** Node.js 或 LaTeX。
+- ## **只用浏览器生成 `.tex`：** 无需安装本项目的依赖，也**不需要** Node.js 或 LaTeX。 
 - **运行命令行或测试：** 安装 [Node.js（官方下载）](https://nodejs.org/en/download)，需要 18 或更新版本。
 - **编译生成的 `.tex` 为 PDF：** 安装一种 LaTeX 发行版，例如 [MiKTeX（Windows 下载）](https://miktex.org/download) 或 [TeX Live（官方安装说明）](https://tug.org/texlive/acquire-netinstall.html)。不需要两种都装。
 - **编译所需宏包：** [xcolor](https://ctan.org/pkg/xcolor)、[ulem](https://ctan.org/pkg/ulem)、[cancel](https://ctan.org/pkg/cancel)。这些链接是 CTAN 的宏包说明与下载页面；通常通过已安装的 LaTeX 发行版管理宏包。示例论文还使用 [amsmath](https://ctan.org/pkg/amsmath) 和 [graphicx](https://ctan.org/pkg/graphicx)。
 
 若文档引用了相对路径的图片或文献文件，请把下载的 `.tex` 放在原项目合适的位置后再编译。
+
+**试用网站** [https://jinghaow.github.io/ManuDiff/](https://jinghaow.github.io/ManuDiff/)
 
 ### 编译后的效果
 

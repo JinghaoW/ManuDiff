@@ -8,6 +8,8 @@ Compare an original and a revised `.tex` file and generate a LaTeX document with
 
 Open `index.html` directly in a browser. Select the **Original** and **New** `.tex` files, choose a minimum word count from **1 to 10** with the slider (default: 1), and click **Generate and download**. The browser downloads `tex_difference.tex`. Files are read and processed locally; no server or installation is required for this step.
 
+**Try the web here** [https://jinghaow.github.io/ManuDiff/](https://jinghaow.github.io/ManuDiff/)
+
 To try the interface, upload `examples/sample_org.tex` and `examples/sample_rev.tex`. Their figure assets, `examples/figure_org.png` and `examples/figure_rev.png`, must remain alongside the generated `.tex` file when you compile it. A pre-generated result at the default threshold is available as `examples/tex_difference.tex`.
 
 ### Installation links
