@@ -11,7 +11,8 @@
     * { box-sizing: border-box; }
     body { margin: 0; min-height: 100vh; color: #19233c; background: #f4f7fc; }
     .shell { max-width: 880px; margin: 0 auto; padding: 58px 24px 72px; }
-    .topbar { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .top-actions { display: flex; align-items: center; justify-content: flex-end; gap: 10px; flex-wrap: wrap; }
     .language-switch { display: flex; gap: 4px; padding: 4px; border: 1px solid #d8e0ef; border-radius: 11px; background: #fff; }
     .language-switch button { min-height: 34px; padding: 0 13px; border-radius: 8px; color: #52617c; background: transparent; font-size: 13px; box-shadow: none; }
     .eyebrow { color: #4663b6; font-size: 12px; font-weight: 750; letter-spacing: .16em; text-transform: uppercase; }
@@ -45,7 +46,15 @@
     .language-switch button[aria-pressed="true"], .language-switch button[aria-pressed="true"]:hover { color: #fff; background: #4668c5; }
     .status { margin: 0; color: #65728d; font-size: 13px; line-height: 1.5; }
     .status.error { color: #be3542; }
+    .progress-wrap { display: none; width: 100%; margin-top: 14px; }
+    .progress-wrap.active { display: block; }
+    .progress-wrap progress { display: block; width: 100%; height: 9px; accent-color: #4169d0; }
+    .progress-label { display: block; margin-top: 7px; color: #65728d; font-size: 12px; }
     .note { margin: 22px 0 0; color: #74819a; font-size: 12px; line-height: 1.6; }
+    .github-cta { display: flex; }
+    .github-star { display: inline-flex; align-items: center; gap: 9px; min-height: 42px; padding: 0 16px; border: 1px solid #d7dfef; border-radius: 11px; color: #344563; background: #fff; font-size: 13px; font-weight: 700; text-decoration: none; box-shadow: 0 5px 15px #24427a0b; transition: border-color .15s, color .15s, transform .15s; }
+    .github-star:hover, .github-star:focus-visible { border-color: #5275d2; color: #274caa; transform: translateY(-1px); }
+    .github-star .star { color: #e0a51b; font-size: 19px; line-height: 1; }
     .result-guide { margin-top: 24px; padding: clamp(24px, 5vw, 36px); border: 1px solid #e3e9f4; border-radius: 24px; background: white; }
     .guide-intro { margin: 12px 0 20px; color: #63708a; font-size: 14px; line-height: 1.7; }
     .paper-preview { padding: 27px 30px; border: 1px solid #e3e7ef; border-radius: 8px; background: #fff; box-shadow: 0 9px 25px #2031570d; }
@@ -53,27 +62,35 @@
     .paper-preview .sample { margin: 0; color: #202020; font-family: Georgia, "Times New Roman", serif; font-size: 19px; line-height: 1.8; }
     .paper-preview del { color: #d4313d; text-decoration-color: #d4313d; text-decoration-thickness: 1.5px; }
     .paper-preview .replace { color: #245fd0; }
-    .paper-preview ins { color: #245fd0; text-decoration-color: #245fd0; text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+    .paper-preview ins { color: #245fd0; text-decoration-color: #245fd0; text-decoration-thickness: 1.5px;text-decoration-style: wavy ; text-underline-offset: 3px; }
     .legend { display: flex; flex-wrap: wrap; gap: 10px 23px; margin: 16px 0 0; padding: 0; list-style: none; color: #5d6b84; font-size: 13px; }
     .legend strong { font-weight: 750; }
     .legend .red { color: #d4313d; }
     .legend .blue { color: #245fd0; }
-    .legend .underlined { color: #245fd0; text-decoration: underline; text-underline-offset: 2px; }
+    .legend .underlined { color: #245fd0; text-decoration: underline; text-decoration-style: wavy ; text-underline-offset: 2px; }
     .compile-guide { margin-top: 27px; padding-top: 24px; border-top: 1px solid #e8edf5; }
     .compile-guide h3 { margin: 0 0 10px; font-size: 16px; }
     .compile-guide p { margin: 0; color: #63708a; font-size: 13px; line-height: 1.75; }
     .compile-guide code { padding: 3px 6px; border-radius: 5px; color: #274caa; background: #eef3ff; font-size: 12px; }
-    @media (max-width: 580px) { .shell { padding: 34px 16px 50px; } .files { grid-template-columns: 1fr; } .panel { border-radius: 18px; } }
+    @media (max-width: 580px) { .shell { padding: 34px 16px 50px; } .top-actions { width: 100%; justify-content: space-between; } .github-star { flex: 1; justify-content: center; } .files { grid-template-columns: 1fr; } .panel { border-radius: 18px; } }
   </style>
 </head>
 <body>
   <main class="shell">
     <div class="topbar">
       <div class="eyebrow">LaTeX text comparison</div>
-      <nav class="language-switch" aria-label="语言 / Language">
-        <button id="lang-zh" type="button" aria-pressed="true">中文</button>
-        <button id="lang-en" type="button" aria-pressed="false">English</button>
-      </nav>
+      <div class="top-actions">
+        <div class="github-cta">
+          <a class="github-star" href="https://github.com/jinghaow/ManuDiff" target="_blank" rel="noopener noreferrer" data-i18n-aria-label="githubStarLabel">
+            <span class="star" aria-hidden="true">★</span>
+            <span data-i18n="githubStar">如果觉得这个工具好用，欢迎给 GitHub 仓库点个 Star！</span>
+          </a>
+        </div>
+        <nav class="language-switch" aria-label="语言 / Language">
+          <button id="lang-zh" type="button" aria-pressed="true">中文</button>
+          <button id="lang-en" type="button" aria-pressed="false">English</button>
+        </nav>
+      </div>
     </div>
     <h1 data-i18n="title">LaTeX 修改标注</h1>
     <p class="intro" data-i18n="intro">选择两个完整的 .tex 文件，设置要显示的最小修改词数，然后下载带有修改痕迹的 LaTeX 文件。</p>
@@ -104,11 +121,15 @@
       </div>
       <input id="min-words" type="range" min="1" max="10" step="1" value="1" aria-labelledby="threshold-label">
       <div class="ticks" aria-hidden="true"><span data-i18n="oneWord">1 个词</span><span data-i18n="fiveWords">5 个词</span><span data-i18n="tenWords">10 个词</span></div>
-      <p class="explain" data-i18n="explain">删除显示红色删除线；替换后文字显示蓝色；纯新增文字显示蓝色下划线。低于所选词数的修改直接采用新版内容，不加标记。</p>
+      <p class="explain" data-i18n="explain">词数门槛仅控制普通文字；单独一处标点不额外标记。公式、引用、图片和整块新增仍会显示标记。</p>
 
       <div class="actions">
         <button id="generate" type="submit" disabled data-i18n="generate">生成并下载 tex_difference.tex</button>
         <p class="status" id="status" role="status" aria-live="polite" data-i18n="chooseBoth">请先选择两个 .tex 文件。</p>
+      </div>
+      <div class="progress-wrap" id="progress-wrap" aria-hidden="true">
+        <progress id="progress" max="100" value="0" aria-labelledby="progress-label"></progress>
+        <span class="progress-label" id="progress-label"></span>
       </div>
     </form>
     <section class="result-guide" aria-labelledby="result-title">
@@ -116,7 +137,7 @@
       <p class="guide-intro" data-i18n="guideIntro">下载的是带标记的 LaTeX 源文件。用 LaTeX 编译后，PDF 正文会像下面这样显示三种修改；这里是效果示意，不是文件的实时预览。</p>
       <div class="paper-preview" aria-label="编译后的文字效果示意" data-i18n-aria-label="previewLabel">
         <p class="caption" data-i18n="previewCaption">PDF 内容示意</p>
-        <p class="sample">The <del>old model</del><span class="replace">new model</span> improves performance <ins>in recent trials</ins>.</p>
+        <p class="sample">The <del>old model</del><span class="replace">new model</span> improves performance <ins> in recent trials</ins>.</p>
       </div>
       <ul class="legend">
         <li data-i18n="legendDeleted"><strong class="red">红色删除线</strong>：旧版删除的文字</li>
@@ -126,11 +147,11 @@
       </ul>
       <div class="compile-guide">
         <h3 data-i18n="compileTitle">如何得到 PDF</h3>
-        <p data-i18n="compileText">把 <code>tex_difference.tex</code> 放到 LaTeX 项目目录，使用原项目的编译方式运行；例如 <code>pdflatex tex_difference.tex</code>，即可得到 <code>tex_difference.pdf</code>。若原项目使用 XeLaTeX 或 LuaLaTeX，请继续使用相同的编译器。低于所选词数的修改在 PDF 中显示为新版文字，不带标记。</p>
+        <p data-i18n="compileText">把 <code>tex_difference.tex</code> 放到 LaTeX 项目目录，使用原项目的编译方式运行；例如 <code>pdflatex tex_difference.tex</code>，即可得到 <code>tex_difference.pdf</code>。若原项目使用 XeLaTeX 或 LuaLaTeX，请继续使用相同的编译器。达到所选词数门槛的文字变化会显示标记。</p>
       </div>
       <div class="compile-guide">
         <h3 data-i18n="structuresTitle">公式、引用和图表</h3>
-        <p data-i18n="structuresText">修改过的行内公式显示旧公式的红色划除和新公式的蓝色内容；整块公式显示红色旧版与蓝色新版。引用键变化保留完整引用命令并标记。更换图片时，PDF 显示旧图片文件名的红色提示和新版图片；图题与表格文字按正文方式标记。最小词数只控制普通文字。图片不会做像素比较；旧引用键若从文献库移除，编译后可能显示为问号。请检查最终 PDF。</p>
+        <p data-i18n="structuresText">修改过的行内公式显示旧公式的红色划除和新公式的蓝色内容；整块公式显示红色旧版与蓝色新版。引用键变化保留完整引用命令并标记。正文不会插入状态文字；图片和表格删除时显示 “Deleted”，修改时显示 “Revised”，纯新增时显示 “Add”。更换图片不会显示旧文件名。最小词数只控制普通文字。图片不会做像素比较；旧引用键若从文献库移除，编译后可能显示为问号。请检查最终 PDF。</p>
       </div>
     </section>
     <p class="note" data-i18n="privacy">文件只在当前浏览器中读取和处理，不会上传到服务器。生成的 .tex 可用你的 LaTeX 编译器编译为 PDF。</p>
@@ -154,13 +175,16 @@
         fiveWords: '5 个词',
         tenWords: '10 个词',
         thresholdValue: value => `${value} 个词以上`,
-        explain: '删除显示红色删除线；替换后文字显示蓝色；纯新增文字显示蓝色下划线。低于所选词数的修改直接采用新版内容，不加标记。',
+        explain: '词数门槛仅控制普通文字；单独一处标点不额外标记。公式、引用、图片和整块新增仍会显示标记。',
         generate: '生成并下载 tex_difference.tex',
         chooseBoth: '请先选择两个 .tex 文件。',
         ready: '文件已就绪，可以生成。',
         generating: '正在生成…',
+        readingProgress: '正在读取文件（15%）',
+        comparingProgress: '正在比较文字（35%）',
+        preparingProgress: '正在准备下载（90%）',
         generated: '已生成 tex_difference.tex。',
-        generatedWithWarning: count => `已生成 tex_difference.tex；另有 ${count} 处复杂语法变化未显示痕迹，请检查。`,
+        generatedWithWarning: count => `已生成 tex_difference.tex；${count} 处复杂结构已使用通用可见标记，请检查。`,
         failed: message => `生成失败：${message}`,
         resultTitle: '编译后是什么样？',
         guideIntro: '下载的是带标记的 LaTeX 源文件。用 LaTeX 编译后，PDF 正文会像下面这样显示三种修改；这里是效果示意，不是文件的实时预览。',
@@ -171,10 +195,12 @@
         legendInserted: '<strong class="underlined">蓝色下划线</strong>：没有对应删除内容的纯新增文字',
         legendNormal: '<strong>普通黑字</strong>：未标记的文字',
         compileTitle: '如何得到 PDF',
-        compileText: '把 <code>tex_difference.tex</code> 放到 LaTeX 项目目录，使用原项目的编译方式运行；例如 <code>pdflatex tex_difference.tex</code>，即可得到 <code>tex_difference.pdf</code>。若原项目使用 XeLaTeX 或 LuaLaTeX，请继续使用相同的编译器。低于所选词数的修改在 PDF 中显示为新版文字，不带标记。',
+        compileText: '把 <code>tex_difference.tex</code> 放到 LaTeX 项目目录，使用原项目的编译方式运行；例如 <code>pdflatex tex_difference.tex</code>，即可得到 <code>tex_difference.pdf</code>。若原项目使用 XeLaTeX 或 LuaLaTeX，请继续使用相同的编译器。达到所选词数门槛的文字变化会显示标记。',
         structuresTitle: '公式、引用和图表',
-        structuresText: '修改过的行内公式显示旧公式的红色划除和新公式的蓝色内容；整块公式显示红色旧版与蓝色新版。引用键变化保留完整引用命令并标记。更换图片时，PDF 显示旧图片文件名的红色提示和新版图片；图题与表格文字按正文方式标记。最小词数只控制普通文字。图片不会做像素比较；旧引用键若从文献库移除，编译后可能显示为问号。请检查最终 PDF。',
+        structuresText: '修改过的行内公式显示旧公式的红色划除和新公式的蓝色内容；整块公式显示红色旧版与蓝色新版。引用键变化保留完整引用命令并标记。正文不会插入状态文字；图片和表格删除时显示 “Deleted”，修改时显示 “Revised”，纯新增时显示 “Add”。更换图片不会显示旧文件名。最小词数只控制普通文字。图片不会做像素比较；旧引用键若从文献库移除，编译后可能显示为问号。请检查最终 PDF。',
         privacy: '文件只在当前浏览器中读取和处理，不会上传到服务器。生成的 .tex 可用你的 LaTeX 编译器编译为 PDF。',
+        githubStar: '如果觉得这个工具好用，欢迎给 GitHub 仓库点个 Star！',
+        githubStarLabel: '在 GitHub 上打开 ManuDiff 仓库并点 Star',
       },
       en: {
         pageTitle: 'ManuDiff - LaTeX Manuscript Diff Tool',
@@ -191,13 +217,16 @@
         fiveWords: '5 words',
         tenWords: '10 words',
         thresholdValue: value => `${value}+ ${value === '1' ? 'word' : 'words'}`,
-        explain: 'Deleted text has a red strikeout, replacement text is blue, and pure insertions have a blue underline. Edits below the selected threshold use the revised text without a mark.',
+        explain: 'The word threshold controls ordinary text only; a single punctuation change is not additionally marked. Formulas, citations, images, and complete inserted blocks remain marked.',
         generate: 'Generate and download tex_difference.tex',
         chooseBoth: 'Choose both .tex files first.',
         ready: 'Files are ready. You can generate the result.',
         generating: 'Generating…',
+        readingProgress: 'Reading files (15%)',
+        comparingProgress: 'Comparing text (35%)',
+        preparingProgress: 'Preparing download (90%)',
         generated: 'Generated tex_difference.tex.',
-        generatedWithWarning: count => `Generated tex_difference.tex. ${count} complex syntax ${count === 1 ? 'change was' : 'changes were'} not visibly marked; please review the result.`,
+        generatedWithWarning: count => `Generated tex_difference.tex. ${count} complex structural ${count === 1 ? 'change uses' : 'changes use'} generic visible markers; please review the result.`,
         failed: message => `Generation failed: ${message}`,
         resultTitle: 'What will the compiled result look like?',
         guideIntro: 'The download is a marked LaTeX source file. After compilation, the PDF shows the three revision styles below. This is an illustration, not a live preview of your files.',
@@ -208,10 +237,12 @@
         legendInserted: '<strong class="underlined">Blue underline</strong>: newly inserted text',
         legendNormal: '<strong>Regular black text</strong>: unmarked text',
         compileTitle: 'How to create the PDF',
-        compileText: 'Place <code>tex_difference.tex</code> in your LaTeX project and use its usual build process. For example, run <code>pdflatex tex_difference.tex</code> to create <code>tex_difference.pdf</code>. Continue using XeLaTeX or LuaLaTeX if the original project uses it. Edits below the selected threshold appear as unmarked revised text.',
+        compileText: 'Place <code>tex_difference.tex</code> in your LaTeX project and use its usual build process. For example, run <code>pdflatex tex_difference.tex</code> to create <code>tex_difference.pdf</code>. Continue using XeLaTeX or LuaLaTeX if the original project uses it. Text changes meeting the selected word threshold are visibly marked.',
         structuresTitle: 'Math, citations, and figures',
-        structuresText: 'Changed inline math shows the old expression in red with cancellation and the new expression in blue. Display math shows the old version in red and the revised version in blue. Citation changes keep and mark the complete citation command. For a changed image, the PDF shows a red note with the old filename and the revised image; captions and table text use the normal text marks. The word threshold applies only to ordinary text. Images are not compared pixel by pixel, and removed citation keys may appear as question marks. Review the final PDF.',
+        structuresText: 'Changed inline math shows the old expression in red with cancellation and the new expression in blue. Display math shows the old version in red and the revised version in blue. Citation changes keep and mark the complete citation command. Body text receives no status wording. Figures and tables show “Deleted” when removed, “Revised” when modified, and “Add” when newly inserted. Changed figures omit the old filename. The word threshold applies only to ordinary text. Images are not compared pixel by pixel, and removed citation keys may appear as question marks. Review the final PDF.',
         privacy: 'Files are read and processed only in this browser and are not uploaded. Compile the generated .tex file with your LaTeX toolchain to create a PDF.',
+        githubStar: 'If you find this tool useful, please star the GitHub repository!',
+        githubStarLabel: 'Open the ManuDiff repository on GitHub and give it a star',
       },
     };
 
@@ -224,6 +255,9 @@
     const thresholdValue = document.getElementById('threshold-value');
     const button = document.getElementById('generate');
     const status = document.getElementById('status');
+    const progressWrap = document.getElementById('progress-wrap');
+    const progress = document.getElementById('progress');
+    const progressLabel = document.getElementById('progress-label');
 
     function t(key) {
       return translations[currentLanguage][key];
@@ -257,6 +291,13 @@
       thresholdValue.value = t('thresholdValue')(slider.value);
       slider.style.setProperty('--fill', `${((Number(slider.value) - 1) / 9) * 100}%`);
     }
+    function setProgress(value, label) {
+      progress.value = value;
+      progressLabel.textContent = label;
+    }
+    function nextPaint() {
+      return new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    }
     document.getElementById('lang-zh').addEventListener('click', () => setLanguage('zh'));
     document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
     originalInput.addEventListener('change', updateFiles);
@@ -270,11 +311,18 @@
       button.disabled = true;
       status.classList.remove('error');
       status.textContent = t('generating');
+      progressWrap.classList.add('active');
+      progressWrap.setAttribute('aria-hidden', 'false');
+      setProgress(15, t('readingProgress'));
       try {
         const [oldSource, newSource] = await Promise.all([
           originalInput.files[0].text(), newInput.files[0].text(),
         ]);
+        setProgress(35, t('comparingProgress'));
+        await nextPaint();
         const result = window.SimpleLatexDiff.makeDiffWithReport(oldSource, newSource, Number(slider.value));
+        setProgress(90, t('preparingProgress'));
+        await nextPaint();
         const url = URL.createObjectURL(new Blob([result.tex], { type: 'application/x-tex;charset=utf-8' }));
         const link = document.createElement('a');
         link.href = url;
@@ -291,6 +339,9 @@
         status.classList.add('error');
       } finally {
         button.disabled = false;
+        progressWrap.classList.remove('active');
+        progressWrap.setAttribute('aria-hidden', 'true');
+        setProgress(0, '');
       }
     });
   </script>
