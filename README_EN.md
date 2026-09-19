@@ -6,7 +6,7 @@ Compare an original and a revised `.tex` file and generate a LaTeX document with
 
 ## Use the browser interface
 
-Open `index.html` directly in a browser. Select the **Original** and **New** `.tex` files, choose a minimum word count from **1 to 10** with the slider (default: 1), and click **Generate and download**. The browser downloads `tex_difference.tex`. Files are read and processed locally; no server or installation is required for this step.
+Open `index.html` directly in a browser, select the **Original** and **New** `.tex` files, and click **Generate and download**. The browser marks every detected change and downloads `tex_difference.tex`. Files are processed locally; no server or installation is required.
 
 **Try the web here** [https://jinghaow.github.io/ManuDiff/](https://jinghaow.github.io/ManuDiff/)
 
@@ -42,18 +42,18 @@ The example shown in the browser is an illustration of the marks, not a live pre
 | Added inline math | Blue underline |
 | Changed display math (`\[...\]`, `equation`, `align`, `gather`, `multline`) | Old expression: red and unnumbered; new expression: blue, with its original number and label retained |
 | Changed `\cite` or common `\ref` command | Old rendered citation/reference: red strikeout; new one: blue |
-| Changed `\includegraphics` command | Red note with the previous image filename, blue note, and the revised image |
+| Changed `\includegraphics` command | Blue “Revised figure” note and the revised image; the old filename is omitted |
 | Figure captions and table cell text | Same word-level marks as ordinary text |
 
 The Sample figure:
 
 <img src="examples/Sample figure.PNG" width="50%">
 
-The minimum word count applies **only to ordinary text**. It means that at least that many word tokens on either side of one contiguous edit must change before the edit is marked. Smaller text edits use the revised wording without visible marks. Supported formula, citation, and image-command changes are treated as individual changes regardless of the slider value.
+The browser interface marks every detected change. Deleted display formulas receive a red diagonal slash, and complete inserted blocks are blue. The optional CLI minimum-word setting applies only to ordinary text; supported formula, citation, and image-command changes are always treated as individual changes.
 
 A word token is a run of Unicode letters or digits. The tool does not perform language-aware word segmentation, so a Chinese phrase without spaces may count as a single token.
 
-The tool compares image commands and filenames; it does **not** compare image pixels. If an old citation key or reference label is no longer resolvable in the revised project, the old citation/reference may appear as `?` in the PDF.
+The tool compares image commands and filenames; it does **not** compare image pixels. Only the revised image is shown in the output, preceded by a “Revised figure” note. If an old citation key or reference label is no longer resolvable in the revised project, the old citation/reference may appear as `?` in the PDF.
 
 ## Command-line use
 
@@ -76,8 +76,8 @@ node --test simple-latex-diff.test.js
 - Both inputs must be complete `.tex` documents with `\begin{document}` and `\end{document}`. The output uses the **revised** preamble and document structure.
 - Comments, labels, code environments, and unsupported custom commands generally use the revised version without a visible mark. Whole-figure or whole-table insertion/deletion, table layout changes, and complex macros require manual review.
 - `\input` and `\include` files are not expanded. Compare or combine those files separately if they contain revised text.
-- The interface and CLI report a count for some detected structural changes that could not be marked. This count is not a complete audit of unmarked changes; review the source and compiled PDF.
-- The comparison treats words, whitespace, punctuation, and some LaTeX structures as separate tokens. If the shortest edit sequence requires **more than 1,000 token insertions/deletions**, the tool stops to limit memory use. This is not a 1,000-word limit. For broader LaTeX syntax and complex projects, use [latexdiff](https://github.com/ftilmann/latexdiff/).
+- For LaTeX structural changes that cannot be wrapped safely, the interface and CLI report a count and insert a generic visible blue `[revised]` or red `[deleted]` marker. Complex structures should still be reviewed manually.
+- Manuscripts of 10,000 characters are supported, as are substantially longer journal files. The comparison treats words, whitespace, punctuation, and some LaTeX structures as separate tokens. When a broad rewrite exceeds 1,000 token edits, unchanged unique lines are used as anchors before local changes are compared in detail, keeping memory bounded. For broader LaTeX syntax and complex projects, use [latexdiff](https://github.com/ftilmann/latexdiff/).
 - The automated tests check the generated source but do not compile a PDF. Compile and inspect the result with your manuscript's toolchain, especially for complex math, citation styles, and floats.
 
 This tool is intended to help prepare a manuscript with tracked changes. Check the target journal's specific submission instructions and review the final PDF before uploading it.
